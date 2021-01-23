@@ -11,7 +11,7 @@ const center = {
   lng: -38.523
 };
 
-export default Map = () => {
+export default Map = ({}) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY
