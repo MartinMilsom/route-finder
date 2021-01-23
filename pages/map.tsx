@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, FunctionComponent } from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 
 const containerStyle = {
@@ -11,7 +11,7 @@ const center = {
   lng: -38.523
 };
 
-export default Map = ({}) => {
+const Map: FunctionComponent = () => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY
@@ -42,3 +42,5 @@ export default Map = ({}) => {
       </GoogleMap>
   ) : <></>
 }
+
+export default Map;
