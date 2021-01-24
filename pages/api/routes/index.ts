@@ -1,6 +1,6 @@
-import { Activity } from "./Activity";
-import { Direction } from "./Direction";
-import { Route } from "./Route";
+import Activity from "./Activity";
+import Direction from "./Direction";
+import Route from "./Route";
 
 export default (req, res) => {
   console.log("query")

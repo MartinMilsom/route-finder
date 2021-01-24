@@ -1,4 +1,4 @@
-export class Distance {
+export default class Distance {
     kilometer: number;
     mile: number;
 }

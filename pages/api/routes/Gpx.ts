@@ -1,3 +1,3 @@
-export class Gpx {
+export default class Gpx {
     location: string;
 }

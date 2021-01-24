@@ -1,4 +1,4 @@
-export class LatLong {
+export default class LatLong {
     latitude: number;
     longitude: number;
 }

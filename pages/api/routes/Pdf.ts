@@ -1,3 +1,3 @@
-export class Pdf {
+export default class Pdf {
     location: string;
 }
