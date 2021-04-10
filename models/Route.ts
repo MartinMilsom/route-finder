@@ -1,16 +1,18 @@
 import Direction from "./Direction";
 import Activity from "./Activity";
 import Distance from "./Distance";
-import Gpx from "./Gpx";
 import LatLong from "./LatLong";
-import Pdf from "./Pdf";
+import { WayPoint } from "./WayPoint";
 
 export default class Route {
+    id: string;
     name: string;
+    description: string;
     distance: Distance;
-    gpx: Gpx;
-    pdf: Pdf;
+    gpx: string;
     centreLocation: LatLong;
     activity: Activity;
     direction: Direction;
+    waypoints: Array<WayPoint>
 }
+

@@ -1,7 +1,10 @@
 import { ApolloServer, gql } from 'apollo-server-micro'
 import Cors from "micro-cors";
 import { makeExecutableSchema } from 'graphql-tools'
-import { MongoClient, ObjectID } from 'mongodb'
+import { MongoClient } from 'mongodb'
+import RouteDao from "../../models/daos/walk";
+import { map } from "../../models/daos/walkMapper";
+import { DocumentNode } from 'graphql';
 
 const typeDefs = gql`
   type Walk {
@@ -15,14 +18,16 @@ const typeDefs = gql`
   }
 `;
 
+
 const resolvers = {
   Query: {
     walksByCounty(_parent, _args, _context, _info) {
       return _context.db
         .collection('newWalks')
-        .findOne({ "Geo.County": _args.county })
-        .then((data) => {
-          return [mapWalk(data)]
+        .find({ "Geo.County": _args.county })
+        .toArray()
+        .then((data: Array<RouteDao>) => {
+          return data.map(x => map(x))
         })
     },
 
@@ -30,8 +35,9 @@ const resolvers = {
       return _context.db
         .collection('newWalks')
         .findOne()
-        .then((data) => {
-          return [ mapWalk(data) ]
+        .then((data: RouteDao) => {
+          console.log(data)
+          return [ map(data) ]
         })
     }
   }
@@ -80,25 +86,3 @@ const cors = Cors({
 
 const handler = apolloServer.createHandler({ path: "/api/graphql" });
 export default cors(handler);
-
-
-
-function stringify( muuid ){
-	const buffer = muuid.buffer
-
-	return [
-		buffer.toString('hex', 0, 4),
-		buffer.toString('hex', 4, 6),
-		buffer.toString('hex', 6, 8),
-		buffer.toString('hex', 8, 10),
-		buffer.toString('hex', 10, 16),
-	].join('-')
-}
-
-function mapWalk(mongoWalk) {
-  console.log(stringify(mongoWalk._id))
-  return {
-    id: stringify(mongoWalk._id),
-    OriginalLink: mongoWalk.OriginalLink
-  }
-}
