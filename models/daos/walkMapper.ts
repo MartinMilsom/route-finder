@@ -5,7 +5,6 @@ import RouteDao from "./walk";
 import { Binary } from "mongodb";
 
 export const map = (mongoWalk: RouteDao): Route => {
-    console.log(mongoWalk.Geo.Gps.Waypoints)
     return {
         id: stringifyId(mongoWalk._id),
         name: mongoWalk.Content.Title,

@@ -102,7 +102,7 @@ const apolloServer = new ApolloServer({
     if (!db) {
       try {
         const dbClient = new MongoClient(
-          'mongodb+srv://mm_admin:rL93ANeOeayl7AHFNSB8a@cluster0.bpeys.mongodb.net/routes?retryWrites=true&w=majority',
+          process.env.mongo_connection,
           {
             useNewUrlParser: true,
             useUnifiedTopology: true,
