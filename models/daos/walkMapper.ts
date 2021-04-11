@@ -5,9 +5,10 @@ import RouteDao from "./walk";
 import { Binary } from "mongodb";
 
 export const map = (mongoWalk: RouteDao): Route => {
+    console.log(mongoWalk.Geo.Gps.Waypoints)
     return {
         id: stringifyId(mongoWalk._id),
-        name: mongoWalk.Content.Name,
+        name: mongoWalk.Content.Title,
         description: mongoWalk.Content.Description,
         distance: {
             mile: mongoWalk.Geo.Gps.TotalEstimatedDistance.Miles,
@@ -27,7 +28,7 @@ export const map = (mongoWalk: RouteDao): Route => {
                 }
             }
         }),
-        gpx: mongoWalk.Files.Gpx,
+        gpx: mongoWalk.Files.GpxFileLocation,
         activity: Activity.Walk,
         direction: mongoWalk.Geo.Gps.Circular ? Direction.Cicular : Direction.PointToPoint
     }

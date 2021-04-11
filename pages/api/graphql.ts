@@ -2,14 +2,53 @@ import { ApolloServer, gql } from 'apollo-server-micro'
 import Cors from "micro-cors";
 import { makeExecutableSchema } from 'graphql-tools'
 import { MongoClient } from 'mongodb'
+import { GraphQLScalarType } from "graphql";
 import RouteDao from "../../models/daos/walk";
 import { map } from "../../models/daos/walkMapper";
-import { DocumentNode } from 'graphql';
 
 const typeDefs = gql`
   type Walk {
     id: String!
-    OriginalLink: String!
+    name: String!
+    description: String!
+    distance: Distance!
+    gpx: String!
+    centreLocation: LatLong!
+    activity: Activity!
+    direction: Direction!
+    waypoints: [WayPoint]!
+  }
+
+  type Distance {
+    kilometer: Float!
+    mile: Float!
+  }
+
+  type LatLong {
+    latitude: Float!
+    longitude: Float!
+  }
+
+  type WayPoint {
+    name: String
+    coordinates: LatLonAlt!
+  }
+
+  enum Direction {
+    Cicular
+    PointToPoint
+  }
+
+  
+  enum Activity {
+    Walk
+    Cycle
+  }
+
+  type LatLonAlt {
+    latitude: Float!
+    longitude: Float!
+    altitude: Int!
   }
 
   type Query {
@@ -17,7 +56,6 @@ const typeDefs = gql`
     walksByCounty(county: String!): [Walk]!
   }
 `;
-
 
 const resolvers = {
   Query: {
@@ -40,6 +78,14 @@ const resolvers = {
           return [ map(data) ]
         })
     }
+  },
+  Activity: {
+    Walk: 0,
+    Cycle: 1
+  },
+  Direction: {
+    Cicular: 0,
+    PointToPoint: 1
   }
 };
 

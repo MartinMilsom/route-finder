@@ -10,7 +10,7 @@ export default class RouteDao {
 }
 
 class ContentDao {
-    Name: string;
+    Title: string;
     Description: string;
 }
 
@@ -20,8 +20,8 @@ class ImageDao {
 }
 
 class FilesDao{
-    Gpx: string;
-    Mmo: string;
+    GpxFileLocation: string;
+    MmoFileLocation: string;
 }
 
 class GeoDao {
