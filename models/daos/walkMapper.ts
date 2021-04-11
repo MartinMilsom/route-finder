@@ -33,7 +33,7 @@ export const map = (mongoWalk: RouteDao): Route => {
     }
 }
 
-const stringifyId = (id: Binary): string => {
+export const stringifyId = (id: Binary): string => {
     const buffer = id.buffer
 
     return [
@@ -43,4 +43,10 @@ const stringifyId = (id: Binary): string => {
         buffer.toString('hex', 8, 10),
         buffer.toString('hex', 10, 16),
     ].join('-')
+}
+
+export const toBinaryId = (uuid: string): Binary => {
+    var hex = uuid.replace(/[{}-]/g, "");
+    var base64Id = Buffer.from(hex, 'hex').toString('base64');
+    return new Binary(Buffer.from(base64Id, "base64"), 3);
 }

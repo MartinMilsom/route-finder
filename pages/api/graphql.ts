@@ -1,10 +1,9 @@
-import { ApolloServer, gql } from 'apollo-server-micro'
+import { ApolloServer, gql } from 'apollo-server-micro';
 import Cors from "micro-cors";
-import { makeExecutableSchema } from 'graphql-tools'
-import { MongoClient } from 'mongodb'
-import { GraphQLScalarType } from "graphql";
+import { makeExecutableSchema } from 'graphql-tools';
+import { MongoClient } from 'mongodb';
 import RouteDao from "../../models/daos/walk";
-import { map } from "../../models/daos/walkMapper";
+import { map, toBinaryId } from "../../models/daos/walkMapper";
 
 const typeDefs = gql`
   type Walk {
@@ -38,7 +37,6 @@ const typeDefs = gql`
     Cicular
     PointToPoint
   }
-
   
   enum Activity {
     Walk
@@ -52,8 +50,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    walks: [Walk]!
     walksByCounty(county: String!): [Walk]!
+    walkById(id: String!): Walk!
   }
 `;
 
@@ -69,13 +67,12 @@ const resolvers = {
         })
     },
 
-    walks(_parent, _args, _context, _info) {
+    walkById(_parent, _args, _context, _info) {
       return _context.db
         .collection('newWalks')
-        .findOne()
+        .findOne({_id: toBinaryId(_args.id) })
         .then((data: RouteDao) => {
-          console.log(data)
-          return [ map(data) ]
+          return map(data)
         })
     }
   },
