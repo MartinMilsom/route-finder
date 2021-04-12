@@ -9,6 +9,7 @@ const typeDefs = gql`
   type Walk {
     id: String!
     name: String!
+    county: String!
     description: String!
     distance: Distance!
     gpx: String!
@@ -65,9 +66,16 @@ const typeDefs = gql`
     lte: Float 
   }
 
+  input RadiusFilter {
+    radius: Float!
+    latitude: Float!
+    longitude: Float!
+  }
+
   type Query {
     walks(filter: WalksFilters): [Walk]!
     walk(id: String!): Walk!
+    walksWithinArea(area: RadiusFilter!): [Walk]!
   }
 `;
 
@@ -105,6 +113,26 @@ const resolvers = {
         .then((data: Array<RouteDao>) => {
           return data.map(x => map(x))
         })
+    },
+
+    walksWithinArea(_parent, _args, _context, _info) {
+      return _context.db
+        .collection('newWalks')
+        .find({
+          "Geo.Gps.AverageLocation.loc": { 
+            $near:{ 
+              $geometry :{
+                  type: "Point", 
+                  coordinates: [_args.area.latitude, _args.area.longitude]
+              }, 
+            $maxDistance: _args.area.radius
+          }
+        }
+      })
+      .toArray()
+      .then((data: Array<RouteDao>) => {
+        return data.map(x => map(x))
+      })
     },
 
     walk(_parent, _args, _context, _info) {

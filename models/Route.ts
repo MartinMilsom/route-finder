@@ -8,6 +8,7 @@ export default class Route {
     id: string;
     name: string;
     description: string;
+    county: string;
     distance: Distance;
     gpx: string;
     centreLocation: LatLong;

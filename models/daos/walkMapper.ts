@@ -17,6 +17,7 @@ export const map = (mongoWalk: RouteDao): Route => {
             latitude: mongoWalk.Geo.Gps.AverageLocation.Lat,
             longitude: mongoWalk.Geo.Gps.AverageLocation.Lon
         },
+        county: mongoWalk.Geo.County,
         waypoints: mongoWalk.Geo.Gps.Waypoints.map(x => {
             return {
                 name: x.Name,
