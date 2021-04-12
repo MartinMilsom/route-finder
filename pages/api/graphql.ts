@@ -48,26 +48,47 @@ const typeDefs = gql`
     longitude: Float!
     altitude: Int!
   }
+  
+  input LocationFilter {
+    latitude: Float!
+    longitude: Float!
+  }
+
+  input WalksFilters {
+    county: String
+    location: LocationFilter
+  }
 
   type Query {
-    walksByCounty(county: String!): [Walk]!
-    walkById(id: String!): Walk!
+    walks(filter: WalksFilters): [Walk]!
+    walk(id: String!): Walk!
   }
 `;
 
 const resolvers = {
   Query: {
-    walksByCounty(_parent, _args, _context, _info) {
+    walks(_parent, _args, _context, _info) {
+
+      var query = {};
+      if(_args.filter?.county) {
+        query["Geo.County"] = _args.filter.county;
+      }
+
+      if(_args.filter?.location) {
+        query["Geo.Gps.AverageLocation.Lat"] = _args.filter.location.latitude;
+        query["Geo.Gps.AverageLocation.Lon"] = _args.filter.location.longitude;
+      }
+
       return _context.db
         .collection('newWalks')
-        .find({ "Geo.County": _args.county })
+        .find(query)
         .toArray()
         .then((data: Array<RouteDao>) => {
           return data.map(x => map(x))
         })
     },
 
-    walkById(_parent, _args, _context, _info) {
+    walk(_parent, _args, _context, _info) {
       return _context.db
         .collection('newWalks')
         .findOne({_id: toBinaryId(_args.id) })
