@@ -1,6 +1,6 @@
 import Activity from "../Activity";
 import Direction from "../Direction";
-import Route from "../Route";
+import { Route } from "../Route";
 import RouteDao from "./walk";
 import { Binary } from "mongodb";
 
@@ -30,7 +30,8 @@ export const map = (mongoWalk: RouteDao): Route => {
         }),
         gpx: mongoWalk.Files.GpxFileLocation,
         activity: Activity.Walk,
-        direction: mongoWalk.Geo.Gps.Circular ? Direction.Cicular : Direction.PointToPoint
+        direction: mongoWalk.Geo.Gps.Circular ? Direction.Cicular : Direction.PointToPoint,
+        originalLink: mongoWalk.OriginalLink
     }
 }
 

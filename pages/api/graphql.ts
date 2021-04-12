@@ -2,8 +2,8 @@ import { ApolloServer, gql } from 'apollo-server-micro';
 import Cors from "micro-cors";
 import { makeExecutableSchema } from 'graphql-tools';
 import { MongoClient } from 'mongodb';
-import RouteDao from "../../models/daos/walk";
-import { map, toBinaryId } from "../../models/daos/walkMapper";
+import RouteDao from "../../domain/daos/walk";
+import { map, toBinaryId } from "../../domain/daos/walkMapper";
 
 const typeDefs = gql`
   type Walk {
@@ -17,6 +17,7 @@ const typeDefs = gql`
     activity: Activity!
     direction: Direction!
     waypoints: [WayPoint]!
+    originalLink: String!
   }
 
   type Distance {

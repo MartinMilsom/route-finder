@@ -1,14 +1,19 @@
 import React, { useCallback, useState, useRef, FunctionComponent } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, Circle } from '@react-google-maps/api';
-import Route from '../models/Route';
-import LatLng from '../models/LatLng';
+import LatLng from '../domain/LatLng';
+import { Query } from "../services/WalksQuery";
+import { Route } from '../models/Route';
 
 const containerStyle = {
   width: '500px',
   height: '500px'
 };
 
-const Map: FunctionComponent = () => {
+interface MapProps {
+  onSelectionChange: Function;
+}
+
+const Map: FunctionComponent<MapProps> = ({onSelectionChange}) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY
@@ -18,7 +23,6 @@ const Map: FunctionComponent = () => {
   const [centre, setCentre] = useState({ lat: 52.696361, lng: -2.218373 })
   const [map, setMap] = useState(null);
   const [markerPosition, setMarkerPosition] = useState<LatLng>(null);
-  const [routes, setRoutes] = useState(new Array<Route>());
 
   const onUnmount = useCallback(function callback(map) {
     setMap(null)
@@ -40,12 +44,15 @@ const Map: FunctionComponent = () => {
     const radius = circle.current.state.circle.radius;
     const lat = circle.current.state.circle.center.lat();
     const lng = circle.current.state.circle.center.lng();
-    const req = await fetch(`/api/routes?centreLat=${lat}&centreLng=${lng}&radius=${radius}`);
-    const routes: Array<Route> = await req.json();
+    const routes: Array<Route> = await getRoutes(lat, lng, radius);
 
-    return setRoutes(routes);
+    onSelectionChange(routes);
   };
 
+  const getRoutes = async (lat: number, lng: number, radius: number): Promise<Array<Route>> => {
+    return await new Query().walksByArea(lat, lng, radius);
+  }
+  
   const search = async (event) => {
       event.preventDefault();
       await fetchRoutes();
@@ -77,11 +84,6 @@ const Map: FunctionComponent = () => {
       </GoogleMap>
       <div>
         <button onClick={search}>Search</button>
-        <ul>
-            {routes.map(route => (
-              <li>{route.name}</li>
-            ))}
-        </ul>
       </div>
     </div>
   ) : <></>
