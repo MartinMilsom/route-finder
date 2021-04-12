@@ -57,6 +57,12 @@ const typeDefs = gql`
   input WalksFilters {
     county: String
     location: LocationFilter
+    milesDistance: DistanceFilter
+  }
+
+  input DistanceFilter {
+    gte: Float
+    lte: Float 
   }
 
   type Query {
@@ -77,6 +83,19 @@ const resolvers = {
       if(_args.filter?.location) {
         query["Geo.Gps.AverageLocation.Lat"] = _args.filter.location.latitude;
         query["Geo.Gps.AverageLocation.Lon"] = _args.filter.location.longitude;
+      }
+
+      if(_args.filter?.milesDistance){
+        var distanceQuery = {};
+        if(_args.filter?.milesDistance?.gte) {
+          distanceQuery["$gte"] = _args.filter.milesDistance.gte;
+        }
+  
+        if(_args.filter?.milesDistance?.lte) {
+          distanceQuery["$lte"] = _args.filter.milesDistance.lte
+        }
+
+        query["Geo.Gps.TotalEstimatedDistance.Miles"] = distanceQuery;
       }
 
       return _context.db
