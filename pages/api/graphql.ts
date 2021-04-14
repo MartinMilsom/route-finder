@@ -2,8 +2,8 @@ import { ApolloServer, gql } from 'apollo-server-micro';
 import Cors from "micro-cors";
 import { makeExecutableSchema } from 'graphql-tools';
 import { MongoClient } from 'mongodb';
-import RouteDao from "../../domain/daos/walk";
-import { map, toBinaryId } from "../../domain/daos/walkMapper";
+import RouteDao from "../../types/daos/walk";
+import { map, toBinaryId } from "../../types/daos/walkMapper";
 
 const typeDefs = gql`
   type Walk {

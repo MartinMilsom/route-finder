@@ -1,5 +1,4 @@
-import { Route } from "../models/Route";
-import { Route as DomainRoute } from "../domain/Route";
+import { Route } from "../types/domain/Route";
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
 const client = new ApolloClient({
@@ -30,13 +29,6 @@ export class Query {
             }
             });
 
-        return result.data.walksWithinArea.map(route => this.toRouteModel(route));
-    }
-
-    toRouteModel = (route: DomainRoute) => {
-        return {
-            name: route.name,
-            link: route.originalLink
-        }
+        return result.data.walksWithinArea;
     }
 }

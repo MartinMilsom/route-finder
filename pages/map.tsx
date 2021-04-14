@@ -1,8 +1,8 @@
 import React, { useCallback, useState, useRef, FunctionComponent } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, Circle } from '@react-google-maps/api';
-import LatLng from '../domain/LatLng';
-import { Query } from "../services/WalksQuery";
-import { Route } from '../models/Route';
+import LatLng from '../types/domain/LatLng';
+import { Query } from "../queries/WalksQuery";
+import { Route } from '../types/domain/Route';
 
 const containerStyle = {
   width: '500px',

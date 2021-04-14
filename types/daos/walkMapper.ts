@@ -1,6 +1,6 @@
-import Activity from "../Activity";
-import Direction from "../Direction";
-import { Route } from "../Route";
+import Activity from "../domain/Activity";
+import Direction from "../domain/Direction";
+import { Route } from "../domain/Route";
 import RouteDao from "./walk";
 import { Binary } from "mongodb";
 
