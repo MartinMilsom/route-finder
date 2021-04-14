@@ -11,8 +11,8 @@ export class Query {
         var result = await client
             .query({
             query: gql`
-                query GetWalks($area: RadiusFilter!) {
-                    walksWithinArea(area: $area) {
+                query GetWalks($filter: WalksFilters!) {
+                    walks(filter: $filter) {
                         id,
                         name,
                         county,
@@ -21,14 +21,16 @@ export class Query {
                 }
                 `,
             variables: {
-                area: {
-                    latitude: lat,
-                    longitude: lng,
-                    radius: radius
+                filter: {
+                    area: {
+                        latitude: lat,
+                        longitude: lng,
+                        radius: radius
+                    }
                 }
             }
             });
 
-        return result.data.walksWithinArea;
+        return result.data.walks;
     }
 }

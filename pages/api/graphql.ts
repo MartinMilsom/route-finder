@@ -60,6 +60,7 @@ const typeDefs = gql`
     county: String
     location: LocationFilter
     milesDistance: DistanceFilter
+    area: RadiusFilter
   }
 
   input DistanceFilter {
@@ -76,7 +77,6 @@ const typeDefs = gql`
   type Query {
     walks(filter: WalksFilters): [Walk]!
     walk(id: String!): Walk!
-    walksWithinArea(area: RadiusFilter!): [Walk]!
   }
 `;
 
@@ -107,6 +107,18 @@ const resolvers = {
         query["Geo.Gps.TotalEstimatedDistance.Miles"] = distanceQuery;
       }
 
+      if(_args.filter?.area) {
+          query["Geo.Gps.AverageLocation.loc"] = { 
+            $near:{ 
+              $geometry :{
+                  type: "Point", 
+                  coordinates: [_args.filter.area.latitude, _args.filter.area.longitude]
+              }, 
+            $maxDistance: _args.filter.area.radius
+          }
+        }
+      }
+
       return _context.db
         .collection('newWalks')
         .find(query)
@@ -114,26 +126,6 @@ const resolvers = {
         .then((data: Array<RouteDao>) => {
           return data.map(x => map(x))
         })
-    },
-
-    walksWithinArea(_parent, _args, _context, _info) {
-      return _context.db
-        .collection('newWalks')
-        .find({
-          "Geo.Gps.AverageLocation.loc": { 
-            $near:{ 
-              $geometry :{
-                  type: "Point", 
-                  coordinates: [_args.area.latitude, _args.area.longitude]
-              }, 
-            $maxDistance: _args.area.radius
-          }
-        }
-      })
-      .toArray()
-      .then((data: Array<RouteDao>) => {
-        return data.map(x => map(x))
-      })
     },
 
     walk(_parent, _args, _context, _info) {
