@@ -1,5 +1,4 @@
 import { ApolloServer, gql } from 'apollo-server-micro';
-import Cors from "micro-cors";
 import { makeExecutableSchema } from 'graphql-tools';
 import { MongoClient } from 'mongodb';
 import RouteDao from "../../types/daos/walk";
@@ -184,9 +183,4 @@ export const config = {
   },
 }
 
-const cors = Cors({
-  allowMethods: ["GET", "POST", "OPTIONS"]
-});
-
-const handler = apolloServer.createHandler({ path: "/api/graphql" });
-export default cors(handler);
+export default apolloServer.createHandler({ path: "/api/graphql" });
