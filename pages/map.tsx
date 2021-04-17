@@ -3,11 +3,17 @@ import { GoogleMap, useJsApiLoader, Marker, Circle } from '@react-google-maps/ap
 import LatLng from '../types/domain/LatLng';
 import { Query } from "../queries/WalksQuery";
 import { Route } from '../types/domain/Route';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const containerStyle = {
   width: '500px',
   height: '500px'
 };
+
+const client = new ApolloClient({
+  uri: '/api/graphql',
+  cache: new InMemoryCache()
+});
 
 interface MapProps {
   onSelectionChange: Function;
@@ -50,7 +56,7 @@ const Map: FunctionComponent<MapProps> = ({onSelectionChange}) => {
   };
 
   const getRoutes = async (lat: number, lng: number, radius: number): Promise<Array<Route>> => {
-    return await new Query().walksByArea(lat, lng, radius);
+    return await new Query(client).walksByArea(lat, lng, radius);
   }
   
   const search = async (event) => {

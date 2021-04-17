@@ -116,7 +116,7 @@ export const resolvers = {
           }
         }
       }
-
+    
       return _context.db
         .collection('newWalks')
         .find(query)

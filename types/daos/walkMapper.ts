@@ -10,8 +10,8 @@ export const map = (mongoWalk: RouteDao): Route => {
         name: mongoWalk.Content.Title,
         description: mongoWalk.Content.Description,
         distance: {
-            mile: mongoWalk.Geo.Gps.TotalEstimatedDistance.Miles,
-            kilometer: mongoWalk.Geo.Gps.TotalEstimatedDistance.Kilometers
+            mile: mongoWalk.Geo?.Gps?.TotalEstimatedDistance?.Miles,
+            kilometer: mongoWalk?.Geo?.Gps?.TotalEstimatedDistance?.Kilometers
         },
         centreLocation: {
             latitude: mongoWalk.Geo.Gps.AverageLocation.Lat,
