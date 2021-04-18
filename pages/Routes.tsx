@@ -7,7 +7,7 @@ interface RouteListProps {
   }
   
 export const Routes: FunctionComponent<RouteListProps> = ({ routes }) => {
-    const heading = routes.length > 0 ? <h2>Walks</h2>: "";
+    const heading = routes?.length > 0 ? <h2>Walks</h2>: "";
 
     return <Fragment>
         {heading}
