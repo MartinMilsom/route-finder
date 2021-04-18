@@ -8,7 +8,6 @@ const schema = makeExecutableSchema({
     resolvers,
 });
 
-console.log("mongo_connection:", process.env.MONGO_CONNECTION);
 const routesDb = new RoutesDatabase(process.env.MONGO_CONNECTION);
 let db;
 
@@ -20,7 +19,6 @@ const apolloServer = new ApolloServer({
             console.log("connecting...");
             db = await routesDb.connectToDb();
         }
-        console.log(db, "database");
         return db;
     }
 });

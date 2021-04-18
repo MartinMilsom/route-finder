@@ -84,7 +84,6 @@ export const typeDefs = gql`
 export const resolvers = {
     Query: {
         async walks(_parent: any, _args: any, _context: Context): Promise<Array<Route>> {
-            console.log("querying");
             const query = {};
             if(_args.filter?.county) {
                 query["Geo.County"] = _args.filter.county;
