@@ -1,5 +1,6 @@
 import { ApolloServer, makeExecutableSchema } from "apollo-server-micro";
 import { createTestClient } from 'apollo-server-testing';
+import { typeDefs, resolvers } from "../pages/api/schema";
 
 export async function testServer(data: any, find: jest.Mock<any, any>) {
   find.mockReturnValue({

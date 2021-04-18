@@ -17,9 +17,10 @@ const client = new ApolloClient({
 
 interface MapProps {
   onSelectionChange: Function;
+  initialMarkerPosition?: LatLng;
 }
 
-const Map: FunctionComponent<MapProps> = ({onSelectionChange}) => {
+const Map: FunctionComponent<MapProps> = ({onSelectionChange, initialMarkerPosition}) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY
@@ -27,12 +28,7 @@ const Map: FunctionComponent<MapProps> = ({onSelectionChange}) => {
 
   const circle = useRef(null);
   const [centre, setCentre] = useState({ lat: 52.696361, lng: -2.218373 })
-  const [map, setMap] = useState(null);
-  const [markerPosition, setMarkerPosition] = useState<LatLng>(null);
-
-  const onUnmount = useCallback(function callback(map) {
-    setMap(null)
-  }, [])
+  const [markerPosition, setMarkerPosition] = useState<LatLng>(initialMarkerPosition);
 
   const onMapClick = (e: google.maps.MapMouseEvent) => {
     const lat = e.latLng.lat();
@@ -47,9 +43,11 @@ const Map: FunctionComponent<MapProps> = ({onSelectionChange}) => {
       return;
     }
 
-    const radius = circle.current.state.circle.radius;
-    const lat = circle.current.state.circle.center.lat();
-    const lng = circle.current.state.circle.center.lng();
+    const currentCircle = circle?.current?.state?.circle;
+
+    const radius = currentCircle?.radius;
+    const lat = currentCircle?.center?.lat();
+    const lng = currentCircle?.center?.lng();
     const routes: Array<Route> = await getRoutes(lat, lng, radius);
 
     onSelectionChange(routes);
@@ -71,7 +69,6 @@ const Map: FunctionComponent<MapProps> = ({onSelectionChange}) => {
         center={centre}
         zoom={6}
         onClick={onMapClick}
-        onUnmount={onUnmount}
       >
         {markerPosition &&
           <Circle
@@ -89,7 +86,9 @@ const Map: FunctionComponent<MapProps> = ({onSelectionChange}) => {
         }
       </GoogleMap>
       <div>
-        <button onClick={search}>Search</button>
+        {markerPosition &&
+          <button onClick={search}>Search</button>
+        }        
       </div>
     </div>
   ) : <></>

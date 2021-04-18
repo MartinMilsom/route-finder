@@ -4,7 +4,7 @@ import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 export class Query {
     client: ApolloClient<NormalizedCacheObject>;
     constructor(client: ApolloClient<NormalizedCacheObject>) {
-        client = client;
+        this.client = client;
     }
 
     async walksByArea(lat: number, lng: number, radius: number): Promise<Array<Route>> {
@@ -36,5 +36,5 @@ export function query(lat: number, lng: number, radius: number): any {
                     }
                 }
             }
-    }
+        }
 }

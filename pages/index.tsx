@@ -3,8 +3,14 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Map from "./map";
 import { Route } from "../types/domain/Route";
+import { Routes } from "./Routes";
+import LatLng from "../types/domain/LatLng";
 
-export default function Home() {
+interface HomeProps {
+  initialMarkerPosition?: LatLng;
+}
+
+const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
   const [routes, setRoutes] = useState(new Array<Route>());
 
   const onRoutesChanged = (routes: Route[]) => {
@@ -14,13 +20,13 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Route Finder</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-      <Map onSelectionChange={onRoutesChanged} />
-      <RouteList routes={routes} />
+        <Map onSelectionChange={onRoutesChanged} initialMarkerPosition={initialMarkerPosition} />
+        <Routes routes={routes} />
       </main>
 
       <footer className={styles.footer}>
@@ -30,14 +36,4 @@ export default function Home() {
   )
 }
 
-interface RouteListProps {
-  routes: Route[]
-}
-
-const RouteList: FunctionComponent<RouteListProps> = ({ routes }) => {
-  return <ul>
-    {routes.map(route => (
-      <li><a href={route.originalLink}>{route.name}</a></li>
-    ))}
-  </ul>
-}
+export default Home;

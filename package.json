@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "test": "jest --runInBand --no-cache --config jest.config.js",
-    "tdd": "test --watch"
+    "tdd": "jest --runInBand --no-cache --config jest.config.js --watch"
   },
   "dependencies": {
     "@apollo/client": "^3.3.14",
@@ -21,6 +21,10 @@
     "react-dom": "17.0.1"
   },
   "devDependencies": {
+    "@testing-library/dom": "^7.30.3",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^13.1.4",
     "@types/googlemaps": "^3.43.2",
     "@types/jest": "^26.0.22",
     "@types/mongodb": "^3.6.12",
