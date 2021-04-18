@@ -12,8 +12,5 @@ jobs:
         with:
           node-version: '14'
       - run: npm ci
-      - uses: sibiraj-s/action-eslint@v1
-        with:
-          eslintArgs: '**'
-          extensions: 'js,jsx,ts,tsx'
-          annotations: true
+      - name: Lint
+        uses: stefanoeb/eslint-action@1.0.2
