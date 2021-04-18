@@ -8,6 +8,7 @@ const schema = makeExecutableSchema({
     resolvers,
 });
 
+console.log(process.env.MONGO_CONNECTION);
 const routesDb = new RoutesDatabase(process.env.MONGO_CONNECTION);
 let db;
 
