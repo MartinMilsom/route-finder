@@ -16,11 +16,11 @@ const apolloServer = new ApolloServer({
     playground: true,
     schema,
     context: async () => {
-        if(!db){
+        if(!db?.db){
             console.log("connecting...");
             db = await routesDb.connectToDb();
         }
-        console.log(db, "db");
+        console.log(db?.db, "db");
         return db;
     }
 });
