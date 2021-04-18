@@ -12,7 +12,7 @@ export const Routes: FunctionComponent<RouteListProps> = ({ routes }) => {
     return <Fragment>
         {heading}
         <ul>
-            {routes.map((route, index) => (
+            {routes?.map((route, index) => (
                 <li key={index}><a href={route.originalLink}>{route.name}</a></li>
             ))}
         </ul>
