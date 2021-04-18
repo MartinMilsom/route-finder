@@ -10,6 +10,7 @@ const schema = makeExecutableSchema({
 
 const routesDb = new RoutesDatabase(process.env.MONGO_CONNECTION);
 let db;
+
 const apolloServer = new ApolloServer({
     playground: true,
     schema,
