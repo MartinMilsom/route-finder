@@ -8,7 +8,7 @@ const schema = makeExecutableSchema({
     resolvers,
 });
 
-console.log(process.env.MONGO_CONNECTION);
+console.log("mongo_connection:", process.env.MONGO_CONNECTION);
 const routesDb = new RoutesDatabase(process.env.MONGO_CONNECTION);
 let db;
 
@@ -17,6 +17,7 @@ const apolloServer = new ApolloServer({
     schema,
     context: async () => {
         if(!db){
+            console.log("connecting...");
             db = await routesDb.connectToDb();
         }
         return db;
