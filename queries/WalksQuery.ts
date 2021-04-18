@@ -17,7 +17,7 @@ export class Query {
 
 export function query(lat: number, lng: number, radius: number): QueryOptions {
     return {
-        query: gql`
+            query: gql`
             query GetWalks($filter: WalksFilters!) {
                 walks(filter: $filter) {
                     id,
