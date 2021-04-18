@@ -8,7 +8,7 @@ const schema = makeExecutableSchema({
     resolvers,
 });
 
-const routesDb = new RoutesDatabase(process.env.mongo_connection);
+const routesDb = new RoutesDatabase(process.env.MONGO_CONNECTION);
 let db;
 const apolloServer = new ApolloServer({
     playground: true,
