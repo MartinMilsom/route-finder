@@ -1,5 +1,5 @@
 import { Route } from "../types/domain/Route";
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, gql, NormalizedCacheObject } from "@apollo/client";
 
 export class Query {
     client: ApolloClient<NormalizedCacheObject>;
@@ -8,7 +8,7 @@ export class Query {
     }
 
     async walksByArea(lat: number, lng: number, radius: number): Promise<Array<Route>> {
-        var result = await this.client
+        const result = await this.client
             .query(query(lat, lng, radius));
 
         return result.data.walks;
@@ -17,24 +17,24 @@ export class Query {
 
 export function query(lat: number, lng: number, radius: number): any {
     return {
-            query: gql`
-                query GetWalks($filter: WalksFilters!) {
-                    walks(filter: $filter) {
-                        id,
-                        name,
-                        county,
-                        originalLink
-                    }
+        query: gql`
+            query GetWalks($filter: WalksFilters!) {
+                walks(filter: $filter) {
+                    id,
+                    name,
+                    county,
+                    originalLink
                 }
-                `,
-            variables: {
-                filter: {
-                    area: {
-                        latitude: lat,
-                        longitude: lng,
-                        radius: radius
-                    }
+            }
+            `,
+        variables: {
+            filter: {
+                area: {
+                    latitude: lat,
+                    longitude: lng,
+                    radius: radius
                 }
             }
         }
+    };
 }

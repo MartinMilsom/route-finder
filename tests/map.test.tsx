@@ -1,4 +1,5 @@
-import { render, fireEvent, waitFor, screen } from "@testing-library/react";
+/* eslint-disable react/display-name */
+import { render, waitFor, screen } from "@testing-library/react";
 import Home from "../pages/index";
 import "@testing-library/jest-dom";
 import { Query } from "../queries/WalksQuery";
@@ -17,10 +18,10 @@ it("loads map", async () => {
 
     // when
     render(<Home />);
-    await waitFor(() => screen.getByText("GoogleMap"))
+    await waitFor(() => screen.getByText("GoogleMap"));
 
     // then
-    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+    expect(screen.queryByRole("button")).not.toBeInTheDocument();
     expect(screen.getByText("GoogleMap")).toBeTruthy();
     expect(screen.queryByText("Walks")).toBeFalsy();
 });
@@ -45,18 +46,18 @@ it("loads search results", async () => {
         gpx: "gpx",
         waypoints: [],
         originalLink: "test-link"
-    }
+    };
     Query.prototype.walksByArea = jest.fn().mockReturnValue([expectedRoute]);
 
     render(<Home initialMarkerPosition={{ lat: 1, lng: 1 }} />);
-    await waitFor(() => screen.getByRole('button'))
+    await waitFor(() => screen.getByRole("button"));
 
     // when
-    screen.getByRole('button').click();
+    screen.getByRole("button").click();
     await waitFor(() => screen.getByText("Walks"));
 
     // then
-    expect(screen.getByRole('button')).toHaveTextContent("Search")
+    expect(screen.getByRole("button")).toHaveTextContent("Search");
     expect(screen.getByText("GoogleMap")).toBeInTheDocument();
     expect(screen.queryByText("Walks")).toBeInTheDocument();
     expect(screen.getByText(expectedRoute.name)).toBeInTheDocument();

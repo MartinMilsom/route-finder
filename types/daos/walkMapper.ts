@@ -26,29 +26,29 @@ export const map = (mongoWalk: RouteDao): Route => {
                     longitude: x.Coordinates.Lon,
                     altitude: x.Coordinates.Alt
                 }
-            }
+            };
         }),
         gpx: mongoWalk.Files.GpxFileLocation,
         activity: Activity.Walk,
         direction: mongoWalk.Geo.Gps.Circular ? Direction.Cicular : Direction.PointToPoint,
         originalLink: mongoWalk.OriginalLink
-    }
-}
+    };
+};
 
 export const stringifyId = (id: Binary): string => {
-    const buffer = id.buffer
+    const buffer = id.buffer;
 
     return [
-        buffer.toString('hex', 0, 4),
-        buffer.toString('hex', 4, 6),
-        buffer.toString('hex', 6, 8),
-        buffer.toString('hex', 8, 10),
-        buffer.toString('hex', 10, 16),
-    ].join('-')
-}
+        buffer.toString("hex", 0, 4),
+        buffer.toString("hex", 4, 6),
+        buffer.toString("hex", 6, 8),
+        buffer.toString("hex", 8, 10),
+        buffer.toString("hex", 10, 16),
+    ].join("-");
+};
 
 export const toBinaryId = (uuid: string): Binary => {
-    var hex = uuid.replace(/[{}-]/g, "");
-    var base64Id = Buffer.from(hex, 'hex').toString('base64');
+    const hex = uuid.replace(/[{}-]/g, "");
+    const base64Id = Buffer.from(hex, "hex").toString("base64");
     return new Binary(Buffer.from(base64Id, "base64"), 3);
-}
+};
