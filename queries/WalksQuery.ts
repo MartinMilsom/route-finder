@@ -1,5 +1,5 @@
 import { Route } from "../types/domain/Route";
-import { ApolloClient, gql, NormalizedCacheObject } from "@apollo/client";
+import { ApolloClient, gql, NormalizedCacheObject, QueryOptions } from "@apollo/client";
 
 export class Query {
     client: ApolloClient<NormalizedCacheObject>;
@@ -15,7 +15,7 @@ export class Query {
     }
 }
 
-export function query(lat: number, lng: number, radius: number): any {
+export function query(lat: number, lng: number, radius: number): QueryOptions {
     return {
         query: gql`
             query GetWalks($filter: WalksFilters!) {

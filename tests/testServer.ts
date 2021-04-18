@@ -2,7 +2,7 @@ import { ApolloServer, makeExecutableSchema } from "apollo-server-micro";
 import { ApolloServerTestClient, createTestClient } from "apollo-server-testing";
 import { typeDefs, resolvers } from "../pages/api/schema";
 
-export function testServer(data: any, find: jest.Mock): ApolloServerTestClient {
+export function testServer<T>(data: T, find: jest.Mock): ApolloServerTestClient {
     find.mockReturnValue({
         toArray: () => Promise.resolve(data)
     });
