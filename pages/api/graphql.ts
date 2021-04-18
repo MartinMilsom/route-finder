@@ -20,7 +20,7 @@ const apolloServer = new ApolloServer({
             console.log("connecting...");
             db = await routesDb.connectToDb();
         }
-        console.log(db?.db, "db");
+        console.log(db, "db");
         return db;
     }
 });
