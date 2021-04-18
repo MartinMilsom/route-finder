@@ -18,4 +18,6 @@ export const Routes: FunctionComponent<RouteListProps> = ({ routes }) => {
         </ul>
     </Fragment>;
 };
+
+export default Routes;
   
