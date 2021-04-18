@@ -8,8 +8,7 @@
     "start": "next start",
     "test": "jest --runInBand --no-cache --config jest.config.js",
     "tdd": "jest --runInBand --no-cache --config jest.config.js --watch",
-    "lint": "eslint **",
-    "ci": "npm install && npm run lint && npm run test && npm run build"
+    "lint": "eslint **"
   },
   "dependencies": {
     "@apollo/client": "^3.3.14",
