@@ -21,7 +21,7 @@ it("loads map", async () => {
     await waitFor(() => screen.getByText("GoogleMap"));
 
     // then
-    expect(screen.queryByRole("button")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button")).toBeInTheDocument();
     expect(screen.getByText("GoogleMap")).toBeTruthy();
     expect(screen.queryByText("Walks")).toBeFalsy();
 });
