@@ -15,9 +15,14 @@ jobs:
           node-version: '14'
       - name: Install packages
         run: npm ci
-      - name: Lint
-        uses: stefanoeb/eslint-action@1.0.2
+      - name: ESLint
+        uses: mrdivyansh/eslint-action@v1.0.7
+        with:
+          repo-token: ${{secrets.GITHUB_TOKEN}}
+          eslint-rc: .eslintrc.json
       - name: Run Jest
         uses: stefanoeb/jest-action@1.0.4
         with:
           jestArgs:  --config jest.config.js
+      - name: Npm build
+        uses: linchpin/action-build-yarn-npm@master
