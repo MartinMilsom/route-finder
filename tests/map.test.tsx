@@ -2,7 +2,7 @@
 import { render, waitFor, screen } from "@testing-library/react";
 import Home from "../pages/index";
 import "@testing-library/jest-dom";
-import { Query } from "../queries/WalksQuery";
+import { Query } from "../queries/Query";
 import { Route } from "../types/domain/Route";
 import Activity from "../types/domain/Activity";
 import Direction from "../types/domain/Direction";
@@ -47,7 +47,7 @@ it("loads search results", async () => {
         waypoints: [],
         originalLink: "test-link"
     };
-    Query.prototype.walksByArea = jest.fn().mockReturnValue([expectedRoute]);
+    Query.prototype.walks = jest.fn().mockReturnValue([expectedRoute]);
 
     render(<Home initialMarkerPosition={{ lat: 1, lng: 1 }} />);
     await waitFor(() => screen.getByRole("button"));

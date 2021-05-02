@@ -1,40 +1,31 @@
-import { Route } from "../types/domain/Route";
-import { ApolloClient, gql, NormalizedCacheObject, QueryOptions } from "@apollo/client";
+export class WalksQuery {
+    readonly area?: AreaQuery;
+    readonly distance?: DistanceQuery;
 
-export class Query {
-    client: ApolloClient<NormalizedCacheObject>;
-    constructor(client: ApolloClient<NormalizedCacheObject>) {
-        this.client = client;
-    }
-
-    async walksByArea(lat: number, lng: number, radius: number): Promise<Array<Route>> {
-        const result = await this.client
-            .query(query(lat, lng, radius));
-
-        return result.data.walks;
+    constructor(area?: AreaQuery, distance?: DistanceQuery) {
+        this.area = area;
+        this.distance = distance;
     }
 }
 
-export function query(lat: number, lng: number, radius: number): QueryOptions {
-    return {
-        query: gql`
-            query GetWalks($filter: WalksFilters!) {
-                walks(filter: $filter) {
-                    id,
-                    name,
-                    county,
-                    originalLink
-                }
-            }
-            `,
-        variables: {
-            filter: {
-                area: {
-                    latitude: lat,
-                    longitude: lng,
-                    radius: radius
-                }
-            }
-        }
-    };
+export class AreaQuery {
+    readonly lat: number;
+    readonly lng: number;
+    readonly radius: number;
+
+    constructor(lat: number, lng: number, radius: number) {
+        this.lat = lat;
+        this.lng = lng;
+        this.radius = radius;
+    }
+}
+
+export class DistanceQuery {
+    readonly greaterThan?: number;
+    readonly lessThan?: number;
+
+    constructor(greaterThan?: number, lessThan?: number) {
+        this.greaterThan = greaterThan;
+        this.lessThan = lessThan;
+    }
 }

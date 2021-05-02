@@ -1,6 +1,6 @@
 import { ApolloServer } from "apollo-server-micro";
 import { makeExecutableSchema } from "graphql-tools";
-import { RoutesDatabase } from "./RoutesDatabase";
+import { Context as DbContext, RoutesDatabase } from "./RoutesDatabase";
 import { typeDefs, resolvers } from "./schema";
 
 const schema = makeExecutableSchema({
@@ -9,7 +9,7 @@ const schema = makeExecutableSchema({
 });
 
 const routesDb = new RoutesDatabase(process.env.MONGO_CONNECTION);
-let db;
+let db: DbContext;
 
 const apolloServer = new ApolloServer({
     playground: true,
