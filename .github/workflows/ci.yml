@@ -15,8 +15,8 @@ jobs:
           node-version: '14'
       - name: Install packages
         run: npm ci
-      - name: Lint
-        uses: stefanoeb/eslint-action@1.0.2
+      - name: ESLint
+        uses: mrdivyansh/eslint-action@v1.0.7
       - name: Run Jest
         uses: stefanoeb/jest-action@1.0.4
         with:
