@@ -17,6 +17,9 @@ jobs:
         run: npm ci
       - name: ESLint
         uses: mrdivyansh/eslint-action@v1.0.7
+        with:
+          repo-token: ${{secrets.GITHUB_TOKEN}}
+          eslint-rc: .eslintrc.json
       - name: Run Jest
         uses: stefanoeb/jest-action@1.0.4
         with:
