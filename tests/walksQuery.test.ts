@@ -1,5 +1,5 @@
 import { mapQuery } from "../queries/Query";
-import { AreaQuery, DistanceQuery, WalksQuery } from "../queries/walksQuery";
+import { AreaQuery, DistanceQuery, WalksQuery } from "../queries/WalksQuery";
 import { toBinaryId } from "../types/daos/walkMapper";
 import { testServer } from "./testServer";
 

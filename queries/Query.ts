@@ -1,6 +1,6 @@
 import { Route } from "../types/domain/Route";
 import { ApolloClient, gql, NormalizedCacheObject, QueryOptions } from "@apollo/client";
-import { WalksQuery } from "./walksQuery";
+import { WalksQuery } from "./WalksQuery";
 
 export class Query {
     client: ApolloClient<NormalizedCacheObject>;

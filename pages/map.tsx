@@ -5,7 +5,7 @@ import { Query } from "../queries/Query";
 import { Route } from "../types/domain/Route";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { MapMouseEvent } from "../types/googlemaps/MapMouseEvent";
-import { AreaQuery, DistanceQuery, WalksQuery } from "../queries/walksQuery";
+import { AreaQuery, DistanceQuery, WalksQuery } from "../queries/WalksQuery";
 
 const containerStyle = {
     width: "500px",
