@@ -1,33 +1,22 @@
-import React, { useState, useRef, FunctionComponent, ChangeEvent } from "react";
+import React, { useState, useRef, FunctionComponent } from "react";
 import { GoogleMap, useJsApiLoader, Circle } from "@react-google-maps/api";
+import { Circle as SearchArea} from "../types/domain/Circle";
 import LatLng from "../types/domain/LatLng";
-import { Query } from "../queries/Query";
-import { Route } from "../types/domain/Route";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { MapMouseEvent } from "../types/googlemaps/MapMouseEvent";
-import { AreaQuery, DistanceQuery, WalksQuery } from "../queries/WalksQuery";
 
 const containerStyle = {
-    width: "500px",
-    height: "500px"
+    width: "100%",
+    height: "100%"
 };
 
-const client = new ApolloClient({
-    uri: "/api/graphql",
-    cache: new InMemoryCache()
-});
-
-class MilesRange {
-    min: number;
-    max: number;
-}
-
 interface MapProps {
-  onSelectionChange: (routes: Route[]) => void;
+  onSelectionChange: (cirlce: SearchArea) => void;
   initialMarkerPosition?: LatLng;
 }
 
-const Map: FunctionComponent<MapProps> = ({onSelectionChange, initialMarkerPosition}) => {
+const initialRadius = 8046;
+
+const Map: FunctionComponent<MapProps> = ({initialMarkerPosition, onSelectionChange}) => {
     const { isLoaded } = useJsApiLoader({
         id: "google-map-script",
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY
@@ -36,7 +25,6 @@ const Map: FunctionComponent<MapProps> = ({onSelectionChange, initialMarkerPosit
     const circle = useRef(null);
     const [centre, setCentre] = useState({ lat: 52.696361, lng: -2.218373 });
     const [markerPosition, setMarkerPosition] = useState<LatLng>(initialMarkerPosition);
-    const [milesRange, setMilesRange] = useState<MilesRange>(null);
 
     const onMapClick = (e: MapMouseEvent): void => {
         const lat = e.latLng.lat();
@@ -44,9 +32,10 @@ const Map: FunctionComponent<MapProps> = ({onSelectionChange, initialMarkerPosit
 
         setCentre({ lat: lat, lng: lng });
         setMarkerPosition({ lat, lng });
+        onSelectionChange({lat: lat, lng: lng, radius: initialRadius});
     };
 
-    const fetchRoutes = async (): Promise<void> => {
+    const onChange = (): void => {
         if(!markerPosition) {
             return;
         }
@@ -56,42 +45,18 @@ const Map: FunctionComponent<MapProps> = ({onSelectionChange, initialMarkerPosit
         const radius = currentCircle?.radius;
         const lat = currentCircle?.center?.lat();
         const lng = currentCircle?.center?.lng();
-        const routes: Array<Route> = await getRoutes(lat, lng, radius);
 
-        onSelectionChange(routes);
-    };
-
-    const getRoutes = async (lat: number, lng: number, radius: number): Promise<Array<Route>> => {
-        const distance = milesRange ? new DistanceQuery(milesRange.min, milesRange.max) : null;
-
-        return await new Query(client).walks(
-            new WalksQuery(
-                new AreaQuery(lat, lng, radius),
-                distance)
-        );
-    };
-    
-    const search = async (): Promise<void> => {
-        await fetchRoutes();
-    };
-
-    const onMinMilesChanged = (event: ChangeEvent<HTMLInputElement>): void => {
-        setMilesRange({ min: parseFloat(event.target.value), max: milesRange?.max });
-    };
-
-    const onMaxMilesChanged = (event: ChangeEvent<HTMLInputElement>): void => {
-        setMilesRange({ min: milesRange?.min, max: parseFloat(event.target.value) });
+        onSelectionChange({lat: lat, lng: lng, radius: radius});
     };
 
     return isLoaded ? (
-        <div>
-            <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={centre}
-                zoom={6}
-                onClick={onMapClick}
-            >
-                {markerPosition &&
+        <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={centre}
+            zoom={6}
+            onClick={onMapClick}
+        >
+            {markerPosition &&
                 <Circle
                     options={{
                         strokeColor: "#FF0000",
@@ -102,21 +67,12 @@ const Map: FunctionComponent<MapProps> = ({onSelectionChange, initialMarkerPosit
                         editable: true
                     }}
                     center={markerPosition}
-                    radius={8046}
-                    ref={circle} />
-                }
-            </GoogleMap>
-            <div>
-                <h4>Miles Distance</h4>
-                <label htmlFor="minMiles">Min</label>
-                <input type="number" id="minMiles" name="minMiles" min="1" max="500" onChange={onMinMilesChanged} />
-                <label htmlFor="maxMiles">Max</label>
-                <input type="number" id="maxMiles" name="maxMiles" min="1" max="500" onChange={onMaxMilesChanged} />
-                {markerPosition &&
-                  <button onClick={search}>Search</button>
-                }
-            </div>
-        </div>
+                    radius={initialRadius}
+                    ref={circle}
+                    onRadiusChanged={onChange}
+                    onCenterChanged={onChange} />
+            }
+        </GoogleMap>
     ) : <></>;
 };
 

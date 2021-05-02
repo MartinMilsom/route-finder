@@ -5,15 +5,23 @@ import Map from "./map";
 import { Route } from "../types/domain/Route";
 import { Routes } from "./Routes";
 import LatLng from "../types/domain/LatLng";
+import { Grid, Box } from "grommet";
+import { Circle } from "../types/domain/Circle";
+import { Search } from "./search";
 
 interface HomeProps {
   initialMarkerPosition?: LatLng;
 }
 
 const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
+    const [selectedCircle, setSelectedCircle] = useState(null);
     const [routes, setRoutes] = useState(new Array<Route>());
 
-    const onRoutesChanged = (routes: Route[]): void => {
+    const onSelectionChange = (circle: Circle): void => {
+        setSelectedCircle(circle);
+    };
+
+    const onSearchComplete = (routes: Route[]): void => {
         setRoutes(routes);
     };
 
@@ -24,10 +32,37 @@ const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main className={styles.main}>
-                <Map onSelectionChange={onRoutesChanged} initialMarkerPosition={initialMarkerPosition} />
-                <Routes routes={routes} />
-            </main>
+            <Grid
+                fill
+                rows={["xxsmall", "medium", "xsmall"]}
+                columns={["1/2", "1/2"]}
+                gap="small"
+                areas={[
+                    { name: "header", start: [0, 0], end: [1, 0] },
+                    { name: "map", start: [0, 1], end: [0, 1] },
+                    { name: "search", start: [0, 2], end: [0, 2] },
+                    { name: "routes", start: [1, 1], end: [1, 2] }
+                ]}
+            >
+                <Box direction="row" align="center" gridArea="header" background="light-2" pad="medium">
+                    Route Finder
+                </Box>
+
+                <Box direction="row" align="center" gridArea="map" background="dark=1">
+                    <Map onSelectionChange={onSelectionChange} initialMarkerPosition={initialMarkerPosition} />
+                </Box>
+
+                <Box direction="row" align="center" gridArea="search" background="dark=1">
+                    <Search 
+                        onSearch={onSearchComplete}
+                        circle={selectedCircle}>
+                    </Search>
+                </Box>
+                
+                <Box gridArea="routes" background="light-1">
+                    <Routes routes={routes} />
+                </Box>
+            </Grid>
 
             <footer className={styles.footer}>
 
