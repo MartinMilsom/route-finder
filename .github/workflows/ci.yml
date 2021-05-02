@@ -21,3 +21,5 @@ jobs:
         uses: stefanoeb/jest-action@1.0.4
         with:
           jestArgs:  --config jest.config.js
+      - name: Npm build
+        uses: linchpin/action-build-yarn-npm@master
