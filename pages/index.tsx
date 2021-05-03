@@ -34,14 +34,14 @@ const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
 
             <Grid
                 fill
-                rows={["xsmall", "medium", "xsmall"]}
-                columns={["1/3", "2/3"]}
+                rows={["xsmall", "medium"]}
+                columns={["1/3", "1/3", "1/3"]}
                 gap="medium"
                 areas={[
-                    { name: "header", start: [0, 0], end: [1, 0] },
+                    { name: "header", start: [0, 0], end: [2, 0] },
                     { name: "map", start: [0, 1], end: [0, 1] },
-                    { name: "search", start: [0, 2], end: [0, 2] },
-                    { name: "routes", start: [1, 1], end: [1, 2] }
+                    { name: "search", start: [1, 1], end: [1, 1] },
+                    { name: "routes", start: [2, 1], end: [2, 1] }
                 ]}
             >
                 <Box direction="row" align="center" gridArea="header" background="light-2" pad="medium">
@@ -52,7 +52,7 @@ const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
                     <Map onSelectionChange={onSelectionChange} initialMarkerPosition={initialMarkerPosition} />
                 </Box>
 
-                <Box direction="row" align="end" gridArea="search" background="light-1" pad="medium">
+                <Box direction="row" align="start" gridArea="search" background="light-1" pad="medium">
                     <Search 
                         onSearch={onSearchComplete}
                         circle={selectedCircle}>

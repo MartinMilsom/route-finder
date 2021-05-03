@@ -4,6 +4,7 @@ import { Query } from "../queries/Query";
 import { AreaQuery, DistanceQuery, WalksQuery } from "../queries/WalksQuery";
 import { Circle } from "../types/domain/Circle";
 import { Route } from "../types/domain/Route";
+import { RangeInput, Button } from "grommet";
 
 type SearchProps = {
     onSearch: (routes: Route[]) => void;
@@ -21,7 +22,7 @@ class MilesRange {
 }
 
 export const Search: FunctionComponent<SearchProps> = ({onSearch, circle}) => {
-    const [milesRange, setMilesRange] = useState<MilesRange>(null);
+    const [milesRange, setMilesRange] = useState<MilesRange>({min: 50, max: 100});
 
     const fetchRoutes = async (): Promise<void> => {
         if(!circle) {
@@ -57,14 +58,30 @@ export const Search: FunctionComponent<SearchProps> = ({onSearch, circle}) => {
 
     return (
         <div>
-            <h4>Miles Distance</h4>
-            <label htmlFor="minMiles">Min</label>
-            <input type="number" id="minMiles" name="minMiles" min="1" max="500" onChange={onMinMilesChanged} />
-            <label htmlFor="maxMiles">Max</label>
-            <input type="number" id="maxMiles" name="maxMiles" min="1" max="500" onChange={onMaxMilesChanged} />
-            {circle &&
-            <button onClick={search}>Search</button>
-            }
+            <h2>Filter</h2>
+            <label htmlFor="minMiles">Minimum Miles: {milesRange.min}</label>
+            <RangeInput
+                min={0}
+                max={400}
+                step={1}
+                value={milesRange.min}
+                onChange={onMinMilesChanged}
+            />
+            <label htmlFor="maxMiles">Maximum Miles: {milesRange.max}</label>
+            <RangeInput
+                min={0}
+                max={400}
+                step={1}
+                value={milesRange.max}
+                onChange={onMaxMilesChanged}
+            />
+            <Button 
+                primary 
+                label="Search"
+                margin={{vertical: "large"}} 
+                alignSelf="center" 
+                disabled={!circle}
+                onClick={search} />
         </div>
     );
 };
