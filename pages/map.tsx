@@ -26,7 +26,7 @@ const Map: FunctionComponent<MapProps> = ({initialMarkerPosition, onSelectionCha
     const [centre, setCentre] = useState({ lat: 52.696361, lng: -2.218373 });
     const [markerPosition, setMarkerPosition] = useState<LatLng>(initialMarkerPosition);
 
-    const onMapClick = (e: MapMouseEvent): void => {
+    const onMapClick = (e: MapMouseEvent): void => {        
         const lat = e.latLng.lat();
         const lng = e.latLng.lng();
 

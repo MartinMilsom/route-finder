@@ -61,6 +61,7 @@ export const Search: FunctionComponent<SearchProps> = ({onSearch, circle}) => {
             <h2>Filter</h2>
             <label htmlFor="minMiles">Minimum Miles: {milesRange.min}</label>
             <RangeInput
+                id="minMiles"
                 min={0}
                 max={400}
                 step={1}
@@ -69,6 +70,7 @@ export const Search: FunctionComponent<SearchProps> = ({onSearch, circle}) => {
             />
             <label htmlFor="maxMiles">Maximum Miles: {milesRange.max}</label>
             <RangeInput
+                id="maxMiles"
                 min={0}
                 max={400}
                 step={1}
@@ -84,4 +86,4 @@ export const Search: FunctionComponent<SearchProps> = ({onSearch, circle}) => {
                 onClick={search} />
         </div>
     );
-};
+};  
