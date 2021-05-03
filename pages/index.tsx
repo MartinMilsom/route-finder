@@ -44,15 +44,15 @@ const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
                     { name: "routes", start: [2, 1], end: [2, 1] }
                 ]}
             >
-                <Box direction="row" align="center" gridArea="header" background="light-2" pad="medium">
-                    Route Finder
+                <Box direction="row" align="center" gridArea="header" background="light-2" pad="small">
+                    <h1>Route Finder</h1>
                 </Box>
 
-                <Box direction="row" align="center" gridArea="map" background="light-1" pad="medium">
+                <Box direction="row" align="center" gridArea="map" background="light-1" pad="small">
                     <Map onSelectionChange={onSelectionChange} initialMarkerPosition={initialMarkerPosition} />
                 </Box>
 
-                <Box direction="row" align="start" gridArea="search" background="light-1" pad="medium">
+                <Box direction="row" align="start" gridArea="search" background="light-1" pad="small">
                     <Search 
                         onSearch={onSearchComplete}
                         circle={selectedCircle}>
