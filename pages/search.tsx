@@ -49,11 +49,16 @@ export const Search: FunctionComponent<SearchProps> = ({onSearch, circle}) => {
     };
 
     const onMinMilesChanged = (event: ChangeEvent<HTMLInputElement>): void => {
-        setMilesRange({ min: parseFloat(event.target.value), max: milesRange?.max });
+        const minMiles = parseFloat(event.target.value);
+        const maxMiles = minMiles > milesRange?.max ? minMiles : milesRange?.max;
+
+        setMilesRange({ min: minMiles, max: maxMiles });
     };
 
     const onMaxMilesChanged = (event: ChangeEvent<HTMLInputElement>): void => {
-        setMilesRange({ min: milesRange?.min, max: parseFloat(event.target.value) });
+        const maxMiles = parseFloat(event.target.value);
+        const minMiles = maxMiles < milesRange?.min ? maxMiles : milesRange.min;
+        setMilesRange({ min: minMiles, max: maxMiles });
     };
 
     return (

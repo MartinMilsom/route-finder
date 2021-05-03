@@ -139,3 +139,37 @@ it("loads search results with distance", async () => {
         }
     });
 });
+
+it("sets maximum filter if minimum is higher", async () => {
+    // given
+    const expectedMiles = 150;
+    render(<Home initialMarkerPosition={{ lat: 1, lng: 1 }} />);
+    const minimumRange = screen.getByLabelText("Minimum Miles: 50");
+
+    // when
+    fireEvent.change(minimumRange, { target: { value: expectedMiles } });    
+    await waitFor(() => screen.getByText(`Minimum Miles: ${expectedMiles}`));
+
+    // then
+    expect(screen.getByLabelText(`Maximum Miles: ${expectedMiles}`)).toBeInTheDocument();
+    expect(screen.getByLabelText(`Maximum Miles: ${expectedMiles}`).getAttribute("value")).toBe(expectedMiles.toString());
+    expect(screen.getByLabelText(`Minimum Miles: ${expectedMiles}`)).toBeInTheDocument();
+    expect(screen.getByLabelText(`Minimum Miles: ${expectedMiles}`).getAttribute("value")).toBe(expectedMiles.toString());
+});
+
+it("sets minimum filter if maximum is lower", async () => {
+    // given
+    const expectedMiles = 20;
+    render(<Home initialMarkerPosition={{ lat: 1, lng: 1 }} />);
+    const maximumRange = screen.getByLabelText("Maximum Miles: 100");
+
+    // when
+    fireEvent.change(maximumRange, { target: { value: expectedMiles } });    
+    await waitFor(() => screen.getByText(`Maximum Miles: ${expectedMiles}`));
+
+    // then
+    expect(screen.getByLabelText(`Maximum Miles: ${expectedMiles}`)).toBeInTheDocument();
+    expect(screen.getByLabelText(`Maximum Miles: ${expectedMiles}`).getAttribute("value")).toBe(expectedMiles.toString());
+    expect(screen.getByLabelText(`Minimum Miles: ${expectedMiles}`)).toBeInTheDocument();
+    expect(screen.getByLabelText(`Minimum Miles: ${expectedMiles}`).getAttribute("value")).toBe(expectedMiles.toString());
+});
