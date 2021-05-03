@@ -91,4 +91,6 @@ export const Search: FunctionComponent<SearchProps> = ({onSearch, circle}) => {
                 onClick={search} />
         </div>
     );
-};  
+};
+
+export default Search;
