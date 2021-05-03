@@ -34,9 +34,9 @@ const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
 
             <Grid
                 fill
-                rows={["xxsmall", "medium", "xsmall"]}
-                columns={["1/2", "1/2"]}
-                gap="small"
+                rows={["xsmall", "medium", "xsmall"]}
+                columns={["1/3", "2/3"]}
+                gap="medium"
                 areas={[
                     { name: "header", start: [0, 0], end: [1, 0] },
                     { name: "map", start: [0, 1], end: [0, 1] },
@@ -48,18 +48,18 @@ const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
                     Route Finder
                 </Box>
 
-                <Box direction="row" align="center" gridArea="map" background="dark=1">
+                <Box direction="row" align="center" gridArea="map" background="light-1" pad="medium">
                     <Map onSelectionChange={onSelectionChange} initialMarkerPosition={initialMarkerPosition} />
                 </Box>
 
-                <Box direction="row" align="center" gridArea="search" background="dark=1">
+                <Box direction="row" align="end" gridArea="search" background="light-1" pad="medium">
                     <Search 
                         onSearch={onSearchComplete}
                         circle={selectedCircle}>
                     </Search>
                 </Box>
                 
-                <Box gridArea="routes" background="light-1">
+                <Box gridArea="routes" background="light-1" pad="medium">
                     <Routes routes={routes} />
                 </Box>
             </Grid>
