@@ -17,7 +17,6 @@ export class Query {
             return null;
         }
 
-        console.log("data", data);
         return data.walks;
     }
 }
@@ -38,6 +37,10 @@ export function mapQuery(query: WalksQuery): QueryOptions {
             longitude: query.area.lng,
             radius: query.area.radius
         };
+    }   
+
+    if(query.direction) {
+        filter["direction"] = query.direction;
     }
 
     return {
@@ -47,7 +50,8 @@ export function mapQuery(query: WalksQuery): QueryOptions {
                     id,
                     name,
                     county,
-                    originalLink
+                    originalLink,
+                    direction
                 }
             }
             `,

@@ -30,7 +30,7 @@ export const map = (mongoWalk: RouteDao): Route => {
         }),
         gpx: mongoWalk.Files.GpxFileLocation,
         activity: Activity.Walk,
-        direction: mongoWalk.Geo.Gps.Circular ? Direction.Cicular : Direction.PointToPoint,
+        direction: mongoWalk.Geo.Gps.Circular ? Direction.Circular : Direction.PointToPoint,
         originalLink: mongoWalk.OriginalLink
     };
 };

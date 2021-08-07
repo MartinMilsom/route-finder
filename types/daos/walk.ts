@@ -7,6 +7,7 @@ export default class RouteDao {
     Files: FilesDao;
     Geo: GeoDao;
     OriginalLink: string;
+    Direction: DirectionDao;
 }
 
 class ContentDao {
@@ -52,4 +53,9 @@ class CoordinatesDao {
 class DistanceDao {
     Miles: number;
     Kilometers: number;
+}
+
+enum DirectionDao {
+    Circular,
+    PointToPoint
 }

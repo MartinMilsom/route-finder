@@ -5,6 +5,7 @@ import { Context } from "./RoutesDatabase";
 import RouteDao from "../../types/daos/walk";
 import { map, toBinaryId } from "../../types/daos/walkMapper";
 import { Route } from "../../types/domain/Route";
+import Direction from "../../types/domain/Direction";
 
 export const typeDefs = gql`
   type Walk {
@@ -37,7 +38,7 @@ export const typeDefs = gql`
   }
 
   enum Direction {
-    Cicular
+    Circular
     PointToPoint
   }
   
@@ -62,6 +63,7 @@ export const typeDefs = gql`
     location: LocationFilter
     milesDistance: DistanceFilter
     area: RadiusFilter
+    direction: Direction
   }
 
   input DistanceFilter {
@@ -87,6 +89,10 @@ export const resolvers = {
             const query: any = {};
             if(_args.filter?.county) {
                 query["Geo.County"] = _args.filter.county;
+            }
+
+            if(_args.filter?.direction) {
+                query["Geo.Gps.Circular"] = _args.filter.direction == Direction.Circular;
             }
 
             if(_args.filter?.location) {
@@ -134,13 +140,5 @@ export const resolvers = {
                 
             return map(walk);
         }
-    },
-    Activity: {
-        Walk: 0,
-        Cycle: 1
-    },
-    Direction: {
-        Cicular: 0,
-        PointToPoint: 1
     }
 };

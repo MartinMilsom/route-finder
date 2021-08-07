@@ -1,11 +1,11 @@
-import { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useState } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Map from "./map";
 import { Route } from "../types/domain/Route";
 import { Routes } from "./Routes";
 import LatLng from "../types/domain/LatLng";
-import { Grid, Box } from "grommet";
+import { Grid, Box, Spinner, Nav, Anchor, Header } from "grommet";
 import { Circle } from "../types/domain/Circle";
 import { Search } from "./search";
 
@@ -14,6 +14,7 @@ interface HomeProps {
 }
 
 const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
+    const [searching, setSearching] = useState(false);
     const [selectedCircle, setSelectedCircle] = useState(null);
     const [routes, setRoutes] = useState(new Array<Route>());
 
@@ -23,6 +24,7 @@ const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
 
     const onSearchComplete = (routes: Route[]): void => {
         setRoutes(routes);
+        setSearching(false);
     };
 
     return (
@@ -53,14 +55,17 @@ const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
                 </Box>
 
                 <Box direction="row" align="start" gridArea="search" background="light-1" pad="small">
-                    <Search 
-                        onSearch={onSearchComplete}
+                    <Search
+                        onSearchStarted={() => setSearching(true)}
+                        onSearchCompleted={onSearchComplete}
                         circle={selectedCircle}>
                     </Search>
                 </Box>
                 
                 <Box gridArea="routes" background="light-1" pad="medium">
-                    <Routes routes={routes} />
+                    {searching 
+                        ? <Spinner  /> 
+                        : <Routes routes={routes} />}
                 </Box>
             </Grid>
 

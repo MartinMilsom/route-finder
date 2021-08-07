@@ -1,10 +1,14 @@
+import Direction from "../types/domain/Direction";
+
 export class WalksQuery {
     readonly area?: AreaQuery;
     readonly distance?: DistanceQuery;
+    readonly direction?: Direction;
 
-    constructor(area?: AreaQuery, distance?: DistanceQuery) {
+    constructor(area?: AreaQuery, distance?: DistanceQuery, direction?: Direction) {
         this.area = area;
         this.distance = distance;
+        this.direction = direction;
     }
 }
 

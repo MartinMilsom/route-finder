@@ -59,7 +59,7 @@ it("loads search results", async () => {
         },
         county: "county",
         description: "description",
-        direction: Direction.Cicular,
+        direction: Direction.Circular,
         distance: {
             mile: 10,
             kilometer: 16
@@ -91,6 +91,7 @@ it("loads search results", async () => {
             lng: 1,
             radius: 8046
         },
+        direction: null,
         distance: {
             greaterThan: 50,
             lessThan: 100
@@ -136,7 +137,47 @@ it("loads search results with distance", async () => {
         distance: {
             greaterThan: 1,
             lessThan: 5
-        }
+        },
+        direction: null
+    });
+});
+
+
+it("loads search results with direction", async () => {
+    // given
+    const expectedRoute = {
+        name: "test",
+    };
+    const walksFn = jest.fn();
+    Query.prototype.walks = walksFn.mockReturnValue([expectedRoute]);
+
+    render(<Home initialMarkerPosition={{ lat: 1, lng: 1 }} />);
+    await waitFor(() => screen.getByText("GoogleMap").closest("button"));
+    screen.getByText("GoogleMap").closest("button").click();
+
+    const pointToPoint = screen.getByLabelText("Point to point");
+    fireEvent.click(pointToPoint); // un-select this option
+
+    // when
+    screen.getByText("Search").closest("button").click();
+    await waitFor(() => screen.getByText("Walks"));
+
+    // then
+    expect(screen.getByText("Search").closest("button")).toBeInTheDocument();
+    expect(screen.getByText("GoogleMap")).toBeInTheDocument();
+    expect(screen.queryByText("Walks")).toBeInTheDocument();
+    expect(screen.getByText(expectedRoute.name)).toBeInTheDocument();
+    expect(walksFn).toHaveBeenCalledWith({ 
+        area: {
+            lat: 1,
+            lng: 1,
+            radius: 8046
+        },
+        distance: {
+            greaterThan: 50,
+            lessThan: 100
+        },
+        direction: Direction.Circular
     });
 });
 

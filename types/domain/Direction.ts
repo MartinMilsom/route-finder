@@ -1,6 +1,6 @@
 enum Direction {
-    Cicular,
-    PointToPoint
+    Circular = "Circular",
+    PointToPoint = "PointToPoint"
 }
 
 export default Direction;
