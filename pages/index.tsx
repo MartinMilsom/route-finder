@@ -1,13 +1,14 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, ReactNode, useState } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Map from "./map";
 import { Route } from "../types/domain/Route";
 import { Routes } from "./Routes";
 import LatLng from "../types/domain/LatLng";
-import { Grid, Box, Spinner, Nav, Anchor, Header } from "grommet";
+import { Box, Spinner } from "grommet";
 import { Circle } from "../types/domain/Circle";
 import { Search } from "./search";
+import ResponsiveGrid from "./responsive-grid";
 
 interface HomeProps {
   initialMarkerPosition?: LatLng;
@@ -34,17 +35,31 @@ const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Grid
+            <ResponsiveGrid
                 fill
-                rows={["xsmall", "medium"]}
+                rows={["xsmall", "medium", "medium", "medium"]}
                 columns={["1/3", "1/3", "1/3"]}
                 gap="medium"
-                areas={[
+                areas={{
+                "large": [
                     { name: "header", start: [0, 0], end: [2, 0] },
                     { name: "map", start: [0, 1], end: [0, 1] },
                     { name: "search", start: [1, 1], end: [1, 1] },
                     { name: "routes", start: [2, 1], end: [2, 1] }
-                ]}
+                ],
+                "medium": [
+                    { name: "header", start: [0, 0], end: [2, 0] },
+                    { name: "map", start: [0, 1], end: [1, 1] },
+                    { name: "search", start: [2, 1], end: [2, 1] },
+                    { name: "routes", start: [0, 2], end: [2, 2] }
+                ],
+                "small": [
+                    { name: "header", start: [0, 0], end: [2, 0] },
+                    { name: "map", start: [0, 1], end: [2, 1] },
+                    { name: "search", start: [0, 2], end: [2, 2] },
+                    { name: "routes", start: [0, 3], end: [2, 3] }
+                ],
+            }}
             >
                 <Box direction="row" align="center" gridArea="header" background="light-2" pad="small">
                     <h1>Route Finder</h1>
@@ -67,7 +82,7 @@ const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
                         ? <Spinner  /> 
                         : <Routes routes={routes} />}
                 </Box>
-            </Grid>
+            </ResponsiveGrid>
 
             <footer className={styles.footer}>
 
