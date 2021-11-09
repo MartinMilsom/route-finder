@@ -63,7 +63,7 @@ export const Search: FunctionComponent<SearchProps> = ({onSearchStarted, onSearc
         <div>
             <h2>Filter</h2>
             <Box pad="medium">
-            <label id="distanceRangeLabel">Distance (Miles)</label>
+            <label id="distanceRangeLabel"><Text>Distance (Miles)</Text></label>
                 <Stack>
                     <Box direction="row" justify="between">
                         {distanceOptions.map(value => (
