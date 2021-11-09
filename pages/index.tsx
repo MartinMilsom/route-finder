@@ -8,7 +8,7 @@ import LatLng from "../types/domain/LatLng";
 import { Box, Spinner } from "grommet";
 import { Circle } from "../types/domain/Circle";
 import { Search } from "./search";
-import ResponsiveGrid from "./responsive-grid";
+import ResponsiveGrid from "../components/responsiveGrid";
 
 interface HomeProps {
   initialMarkerPosition?: LatLng;

@@ -24,7 +24,6 @@ interface ResponsiveGridProps {
 
 const ResponsiveGrid = ({ children, areas, ...props }: ResponsiveGridProps) => {
     const size: string = React.useContext(ResponsiveContext);
-    console.log("size: ", areas[size])
     return (
       <Grid areas={areas[size]} {...props}>
         {children}
