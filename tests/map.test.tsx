@@ -105,48 +105,6 @@ it("loads search results", async () => {
     });
 });
 
-// it("loads search results with distance", async () => {
-//     // given
-//     const expectedRoute = {
-//         name: "test",
-//     };
-//     const walksFn = jest.fn();
-//     Query.prototype.walks = walksFn.mockReturnValue([expectedRoute]);
-
-//     render(<Home initialMarkerPosition={{ lat: 1, lng: 1 }} />);
-//     await waitFor(() => screen.getByText("GoogleMap").closest("button"));
-//     screen.getByText("GoogleMap").closest("button").click();
-
-//     const distanceRange = screen.getByLabelText("Distance (Miles)").querySelector("div:nth-child(4) > div");
-//     await fireEvent.drag(distanceRange, {
-//         target: {x: 1000, y: 0},
-//       })
-//     await waitFor(() => screen.getByLabelText("Distance (Miles)"));
-
-//     // when
-//     screen.getByText("Search").closest("button").click();
-//     await waitFor(() => screen.getByText("Walks"));
-
-//     // then
-//     expect(screen.getByText("Search").closest("button")).toBeInTheDocument();
-//     expect(screen.getByText("GoogleMap")).toBeInTheDocument();
-//     expect(screen.queryByText("Walks")).toBeInTheDocument();
-//     expect(screen.getByText(expectedRoute.name)).toBeInTheDocument();
-//     expect(walksFn).toHaveBeenCalledWith({ 
-//         area: {
-//             lat: 1,
-//             lng: 1,
-//             radius: 8046
-//         },
-//         distance: {
-//             greaterThan: 1,
-//             lessThan: 5
-//         },
-//         direction: null
-//     });
-// });
-
-
 it("loads search results with direction", async () => {
     // given
     const expectedRoute = {

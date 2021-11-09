@@ -37,26 +37,26 @@ const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
 
             <ResponsiveGrid
                 fill
-                rows={["xsmall", "medium", "medium", "medium"]}
-                columns={["1/3", "1/3", "1/3"]}
+                rows={["xsmall", "medium", "small", "medium", "medium"]}
+                columns={["1/4", "1/4", "1/4", "1/4"]}
                 areas={{
                 "large": [
-                    { name: "header", start: [0, 0], end: [2, 0] },
-                    { name: "map", start: [0, 1], end: [0, 1] },
-                    { name: "search", start: [1, 1], end: [1, 1] },
-                    { name: "routes", start: [2, 1], end: [2, 1] }
+                    { name: "header", start: [0, 0], end: [3, 0] },
+                    { name: "map", start: [0, 1], end: [1, 2] },
+                    { name: "search", start: [2, 1], end: [3, 1] },
+                    { name: "routes", start: [0, 3], end: [3, 4] }
                 ],
                 "medium": [
-                    { name: "header", start: [0, 0], end: [2, 0] },
-                    { name: "map", start: [0, 1], end: [1, 1] },
-                    { name: "search", start: [2, 1], end: [2, 1] },
-                    { name: "routes", start: [0, 2], end: [2, 2] }
+                    { name: "header", start: [0, 0], end: [3, 0] },
+                    { name: "map", start: [0, 1], end: [1, 2] },
+                    { name: "search", start: [2, 1], end: [3, 1] },
+                    { name: "routes", start: [0, 3], end: [3, 4] }
                 ],
                 "small": [
-                    { name: "header", start: [0, 0], end: [2, 0] },
-                    { name: "map", start: [0, 1], end: [2, 1] },
-                    { name: "search", start: [0, 2], end: [2, 2] },
-                    { name: "routes", start: [0, 3], end: [2, 3] }
+                    { name: "header", start: [0, 0], end: [3, 0] },
+                    { name: "map", start: [0, 1], end: [3, 2] },
+                    { name: "search", start: [0, 3], end: [3, 3] },
+                    { name: "routes", start: [0, 4], end: [3, 4] }
                 ],
             }}
             >
