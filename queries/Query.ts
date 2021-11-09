@@ -51,7 +51,11 @@ export function mapQuery(query: WalksQuery): QueryOptions {
                     name,
                     county,
                     originalLink,
-                    direction
+                    direction,
+                    distance {
+                        mile,
+                        kilometer
+                    }
                 }
             }
             `,
