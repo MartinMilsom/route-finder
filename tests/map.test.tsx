@@ -109,6 +109,9 @@ it("loads search results with direction", async () => {
     // given
     const expectedRoute = {
         name: "test",
+        distance: {
+            mile: 1
+        }
     };
     const walksFn = jest.fn();
     Query.prototype.walks = walksFn.mockReturnValue([expectedRoute]);
