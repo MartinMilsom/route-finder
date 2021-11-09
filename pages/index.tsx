@@ -39,7 +39,6 @@ const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
                 fill
                 rows={["xsmall", "medium", "medium", "medium"]}
                 columns={["1/3", "1/3", "1/3"]}
-                gap="medium"
                 areas={{
                 "large": [
                     { name: "header", start: [0, 0], end: [2, 0] },
