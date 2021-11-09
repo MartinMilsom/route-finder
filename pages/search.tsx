@@ -1,10 +1,10 @@
-import React, { ChangeEvent, FunctionComponent, useState } from "react";
+import React, { useEffect, FunctionComponent, useState } from "react";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { Query } from "../queries/Query";
 import { AreaQuery, DistanceQuery, WalksQuery } from "../queries/WalksQuery";
 import { Circle } from "../types/domain/Circle";
 import { Route } from "../types/domain/Route";
-import { RangeInput, Button, CheckBox, Box } from "grommet";
+import { Button, CheckBox, Box, Stack, RangeSelector, Text } from "grommet";
 import Direction from "../types/domain/Direction";
 
 type SearchProps = {
@@ -18,13 +18,10 @@ const client = new ApolloClient({
     cache: new InMemoryCache()
 });
 
-class MilesRange {
-    min: number;
-    max: number;
-}
+export const distanceOptions: Array<number> = [0, 1, 3, 5, 7, 10, 15, 25, 50, 100, 200];
 
 export const Search: FunctionComponent<SearchProps> = ({onSearchStarted, onSearchCompleted, circle}) => {
-    const [milesRange, setMilesRange] = useState<MilesRange>({min: 50, max: 100});
+    const [distanceIndex, setDistanceIndex] = React.useState([1, 5]);
     const [pointToPoint, setPointToPoint] = useState(true);
     const [circular, setCircular] = useState(true);
 
@@ -39,7 +36,7 @@ export const Search: FunctionComponent<SearchProps> = ({onSearchStarted, onSearc
     };
 
     const getRoutes = async (circle: Circle): Promise<Array<Route>> => {
-        const distance = milesRange ? new DistanceQuery(milesRange.min, milesRange.max) : null;
+        const distance = new DistanceQuery(distanceOptions[distanceIndex[0]], distanceOptions[distanceIndex[1]]);
         let direction: Direction = null;
         if(circular && !pointToPoint) {
             direction = Direction.Circular;
@@ -62,53 +59,48 @@ export const Search: FunctionComponent<SearchProps> = ({onSearchStarted, onSearc
         await fetchRoutes();
     };
 
-    const onMinMilesChanged = (event: ChangeEvent<HTMLInputElement>): void => {
-        const minMiles = parseFloat(event.target.value);
-        const maxMiles = minMiles > milesRange?.max ? minMiles : milesRange?.max;
-
-        setMilesRange({ min: minMiles, max: maxMiles });
-    };
-
-    const onMaxMilesChanged = (event: ChangeEvent<HTMLInputElement>): void => {
-        const maxMiles = parseFloat(event.target.value);
-        const minMiles = maxMiles < milesRange?.min ? maxMiles : milesRange.min;
-        setMilesRange({ min: minMiles, max: maxMiles });
-    };
-
     return (
         <div>
             <h2>Filter</h2>
             <Box pad="medium">
-                <label htmlFor="minMiles">Minimum Miles: {milesRange.min}</label>
-                <RangeInput
-                    id="minMiles"
-                    min={0}
-                    max={400}
-                    step={1}
-                    value={milesRange.min}
-                    onChange={onMinMilesChanged}
-                />
-                <label htmlFor="maxMiles">Maximum Miles: {milesRange.max}</label>
-                <RangeInput
-                    id="maxMiles"
-                    min={0}
-                    max={400}
-                    step={1}
-                    value={milesRange.max}
-                    onChange={onMaxMilesChanged}
-                />
+            <label id="distanceRangeLabel">Distance (Miles)</label>
+                <Stack>
+                    <Box direction="row" justify="between">
+                        {distanceOptions.map(value => (
+                        <Box key={value} pad="small" basis="xsmall" >
+                            <Text alignSelf="center" style={{ fontFamily: 'monospace' }}>
+                            {value}
+                            </Text>
+                        </Box>
+                        ))}
+                    </Box>
+                    <RangeSelector
+                        aria-labelledby="distanceRangeLabel"
+                        direction="horizontal"
+                        invert={false}
+                        min={0}
+                        max={10}
+                        size="full"
+                        round="small"
+                        values={distanceIndex}
+                        onChange={values => setDistanceIndex(values)}
+                    />
+                </Stack>
             </Box>
-            <Box pad="medium" direction="row" gap="medium">
-                <CheckBox
-                    label="Circular"
-                    checked={circular}
-                    onChange={(event) => setCircular(event.target.checked)}
-                />
-                <CheckBox
-                    label="Point to point"
-                    checked={pointToPoint}
-                    onChange={(event) => setPointToPoint(event.target.checked)}
-                />
+            <Box pad="medium">
+                <label htmlFor="minMiles"><Text>Direction</Text></label>
+                <Box direction="row" gap="medium">
+                    <CheckBox
+                        label="Circular"
+                        checked={circular}
+                        onChange={(event) => setCircular(event.target.checked)}
+                    />
+                    <CheckBox
+                        label="Point to point"
+                        checked={pointToPoint}
+                        onChange={(event) => setPointToPoint(event.target.checked)}
+                    />
+                </Box>
             </Box>
             <Button 
                 primary
