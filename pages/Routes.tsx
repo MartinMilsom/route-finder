@@ -19,22 +19,22 @@ export const Routes: FunctionComponent<RouteListProps> = ({ routes }) => {
                 pad={{
                     vertical: "large"
                 }}
-                rows={routes.map(x => "xsmall")}>
-            {routes?.map((route, index) => (
-                <Card key={index} background="light-1">
-                    <CardBody pad="small">
-                        <Box direction="row">
-                            <Box pad={{horizontal: "medium"}}><Text>{route.name}</Text></Box>
-                            <Box pad={{horizontal: "medium"}}>{route.direction == Direction.Circular ? <RadialIcon /> : <ContractIcon />}</Box>
-                            <Box pad={{horizontal: "medium"}}><Text>{route.distance.mile.toFixed(0)} miles</Text></Box>
-                            <Box pad={{horizontal: "medium"}}><Text>{route.county}</Text></Box>
-                        </Box>  
-                    </CardBody>
-                    <CardFooter pad="xxxsmall" background="light-2">
-                        <Button href={route.originalLink} icon={<LinkIcon color="plain" />} hoverIndicator />
-                    </CardFooter>
-                </Card>
-            ))}
+                rows={routes?.map(() => "xsmall")}>
+                {routes?.map((route, index) => (
+                    <Card key={index} background="light-1">
+                        <CardBody pad="small">
+                            <Box direction="row">
+                                <Box pad={{horizontal: "medium"}}><Text>{route.name}</Text></Box>
+                                <Box pad={{horizontal: "medium"}}>{route.direction == Direction.Circular ? <RadialIcon /> : <ContractIcon />}</Box>
+                                <Box pad={{horizontal: "medium"}}><Text>{route.distance.mile.toFixed(0)} miles</Text></Box>
+                                <Box pad={{horizontal: "medium"}}><Text>{route.county}</Text></Box>
+                            </Box>  
+                        </CardBody>
+                        <CardFooter pad="xxxsmall" background="light-2">
+                            <Button href={route.originalLink} icon={<LinkIcon color="plain" />} hoverIndicator />
+                        </CardFooter>
+                    </Card>
+                ))}
             </Grid>
         </Box>
     </Fragment>;
