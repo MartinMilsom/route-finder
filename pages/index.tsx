@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, useState } from "react";
+import React, { FunctionComponent, useState } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Map from "./map";
@@ -11,10 +11,10 @@ import { Search } from "./search";
 import ResponsiveGrid from "../components/responsiveGrid";
 
 interface HomeProps {
-  initialMarkerPosition?: LatLng;
+    initialMarkerPosition?: LatLng;
 }
 
-const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
+const Home: FunctionComponent<HomeProps> = ({ initialMarkerPosition }) => {
     const [searching, setSearching] = useState(false);
     const [selectedCircle, setSelectedCircle] = useState(null);
     const [routes, setRoutes] = useState(new Array<Route>());
@@ -40,25 +40,25 @@ const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
                 rows={["xsmall", "medium", "small", "medium", "medium"]}
                 columns={["1/4", "1/4", "1/4", "1/4"]}
                 areas={{
-                "large": [
-                    { name: "header", start: [0, 0], end: [3, 0] },
-                    { name: "map", start: [0, 1], end: [1, 2] },
-                    { name: "search", start: [2, 1], end: [3, 1] },
-                    { name: "routes", start: [0, 3], end: [3, 4] }
-                ],
-                "medium": [
-                    { name: "header", start: [0, 0], end: [3, 0] },
-                    { name: "map", start: [0, 1], end: [1, 2] },
-                    { name: "search", start: [2, 1], end: [3, 1] },
-                    { name: "routes", start: [0, 3], end: [3, 4] }
-                ],
-                "small": [
-                    { name: "header", start: [0, 0], end: [3, 0] },
-                    { name: "map", start: [0, 1], end: [3, 2] },
-                    { name: "search", start: [0, 3], end: [3, 3] },
-                    { name: "routes", start: [0, 4], end: [3, 4] }
-                ],
-            }}
+                    "large": [
+                        { name: "header", start: [0, 0], end: [3, 0] },
+                        { name: "map", start: [0, 1], end: [1, 2] },
+                        { name: "search", start: [2, 1], end: [3, 1] },
+                        { name: "routes", start: [0, 3], end: [3, 4] }
+                    ],
+                    "medium": [
+                        { name: "header", start: [0, 0], end: [3, 0] },
+                        { name: "map", start: [0, 1], end: [1, 2] },
+                        { name: "search", start: [2, 1], end: [3, 1] },
+                        { name: "routes", start: [0, 3], end: [3, 4] }
+                    ],
+                    "small": [
+                        { name: "header", start: [0, 0], end: [3, 0] },
+                        { name: "map", start: [0, 1], end: [3, 2] },
+                        { name: "search", start: [0, 3], end: [3, 3] },
+                        { name: "routes", start: [0, 4], end: [3, 4] }
+                    ],
+                }}
             >
                 <Box direction="row" align="center" gridArea="header" background="light-2" pad="small">
                     <h1>Route Finder</h1>
@@ -75,10 +75,10 @@ const Home: FunctionComponent<HomeProps> = ({initialMarkerPosition}) => {
                         circle={selectedCircle}>
                     </Search>
                 </Box>
-                
+
                 <Box gridArea="routes" background="light-1" pad="medium">
-                    {searching 
-                        ? <Spinner  /> 
+                    {searching
+                        ? <Spinner />
                         : <Routes routes={routes} />}
                 </Box>
             </ResponsiveGrid>
