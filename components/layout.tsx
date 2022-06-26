@@ -14,12 +14,12 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Box
-        height="90vh"
+        height="75vh"
         style={{
           marginBottom: "50px",
-          clipPath: "polygon(0 0, 100% 0, 100% 75vh, 0 100%)",
+          clipPath: "polygon(0 0, 100% 0, 100% 65vh, 0 100%)",
           backgroundImage:
-            "linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url('/img/banner.jpg')",
+            "linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url('/img/banner2.jpg')",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
@@ -38,14 +38,14 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
           <Navigate size="large" color="brand" />
         </Box>
         <Box
-          margin={{ top: "large" }}
-          pad="large"
-          background="rgba(0, 0, 0, 0.2)"
+          pad="xlarge"
+          background="rgba(100, 150, 150, 0.1)"
           elevation="xlarge"
+          height={"100%"}
           width="large"
           align="center"
           alignContent="center"
-          alignSelf="center"
+          alignSelf="end"
           style={{
             display: "inline-block",
             textAlign: "center",
@@ -58,9 +58,8 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
               alignSelf="center"
               className="box-corners"
               margin={{ bottom: "xsmall", top: "0" }}
-              style={{ width: "fit-content", height: "fit-content" }}
             >
-              <Heading color="brand" margin="small">
+              <Heading color="brand" margin="small" textAlign="center">
                 Route Finder
               </Heading>
             </Box>
@@ -76,7 +75,12 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
               }}
               onClick={() => router.push("/#search")}
             >
-              <Heading level={4} margin="none" color="white">
+              <Heading
+                level={4}
+                margin="none"
+                color="white"
+                style={{ display: "inline-block" }}
+              >
                 Explore now
               </Heading>
             </Button>
