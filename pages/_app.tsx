@@ -7,6 +7,14 @@ import "../styles/globals.css";
 
 const theme: ThemeType = {
   global: {
+    colors: {
+      brand: "#AE7832",
+      focus: "#DDB989",
+      "accent-1": "#3B4545",
+      "accent-2": "#717A84",
+      "neutral-dark": "#00050B",
+      "neutral-light": "#E7D8B9",
+    },
     font: {
       family: "Roboto",
       size: "14px",
@@ -23,7 +31,7 @@ const theme: ThemeType = {
     },
   },
   button: {
-    primary: { color: "rgba(79, 79, 78, 0.4)" },
+    primary: { color: "brand" },
   },
 };
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {

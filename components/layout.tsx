@@ -24,7 +24,6 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           backgroundColor: "#4f4f4e",
-          width: "100%",
           position: "relative",
         }}
       >
@@ -36,39 +35,52 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
             color: "white",
           }}
         >
-          <Navigate size="large" color="white" />
+          <Navigate size="large" color="brand" />
         </Box>
         <Box
-          className="box-corners"
-          pad="medium"
+          margin={{ top: "large" }}
+          pad="large"
+          background="rgba(0, 0, 0, 0.2)"
+          elevation="xlarge"
+          width="large"
+          align="center"
+          alignContent="center"
+          alignSelf="center"
           style={{
+            display: "inline-block",
             textAlign: "center",
-            position: "absolute",
-            top: "30%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            color: "white",
           }}
         >
-          <Heading margin={{ bottom: "xsmall", top: "0" }}>
-            Route Finder
-          </Heading>
-          <Heading level={3} margin={{ top: "xsmall" }}>
-            Search and explore hikes across the UK
-          </Heading>
-          <Button
-            primary
-            hoverIndicator
-            margin={{ bottom: "medium" }}
-            style={{
-              padding: "6px",
-            }}
-            onClick={() => router.push("/#search")}
-          >
-            <Heading level={4} margin="none" color="white">
-              Explore now
+          <Box pad="medium">
+            <Box
+              align="center"
+              alignContent="center"
+              alignSelf="center"
+              className="box-corners"
+              margin={{ bottom: "xsmall", top: "0" }}
+              style={{ width: "fit-content", height: "fit-content" }}
+            >
+              <Heading color="brand" margin="small">
+                Route Finder
+              </Heading>
+            </Box>
+            <Heading level={3} margin={{ top: "xsmall" }} color="neutral-light">
+              Search and explore hikes across the UK
             </Heading>
-          </Button>
+            <Button
+              primary
+              hoverIndicator
+              margin={{ bottom: "medium" }}
+              style={{
+                padding: "6px",
+              }}
+              onClick={() => router.push("/#search")}
+            >
+              <Heading level={4} margin="none" color="white">
+                Explore now
+              </Heading>
+            </Button>
+          </Box>
         </Box>
       </Box>
       {children}

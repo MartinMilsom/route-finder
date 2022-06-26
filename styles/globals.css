@@ -16,24 +16,45 @@ a {
 }
 
 .box-corners {
-  background: linear-gradient(to right, white 2px, transparent 3px) 0 0,
-    linear-gradient(to left, white 2px, transparent 3px) 100% 100%,
-    linear-gradient(to bottom, white 2px, transparent 3px) 0 0,
-    linear-gradient(to top, white 2px, transparent 3px) 100% 100%;
+  background: linear-gradient(to right, #e7d8b9 2px, transparent 2px) 0 0,
+    linear-gradient(to left, #e7d8b9 2px, transparent 2px) 100% 100%,
+    linear-gradient(to bottom, #e7d8b9 2px, transparent 2px) 0 0,
+    linear-gradient(to top, #e7d8b9 2px, transparent 2px) 100% 100%;
 
   background-repeat: no-repeat;
-  background-size: 50% 30%;
+  background-size: 30% 20%;
 
   /* 
       // All four corners
-      linear-gradient(to right, white 2px, transparent 3px) 0 0,
-      linear-gradient(to right, white 2px, transparent 3px) 0 100%,
-      linear-gradient(to left, white 2px, transparent 3px) 100% 0, 
-      linear-gradient(to left, white 2px, transparent 3px) 100% 100%,
-      linear-gradient(to bottom, white 2px, transparent 3px) 0 0,
-      linear-gradient(to bottom, white 2px, transparent 3px) 100% 0,
-      linear-gradient(to top, white 2px, transparent 3px) 0 100%,
-      linear-gradient(to top, white 2px, transparent 3px) 100% 100%;
+      linear-gradient(to right, white 2px, transparent 2px) 0 0,
+      linear-gradient(to right, white 2px, transparent 2px) 0 100%,
+      linear-gradient(to left, white 2px, transparent 2px) 100% 0, 
+      linear-gradient(to left, white 2px, transparent 2px) 100% 100%,
+      linear-gradient(to bottom, white 2px, transparent 2px) 0 0,
+      linear-gradient(to bottom, white 2px, transparent 2px) 100% 0,
+      linear-gradient(to top, white 2px, transparent 2px) 0 100%,
+      linear-gradient(to top, white 2px, transparent 2px) 100% 100%;
       background-size: 20px 20px;
       */
 }
+
+/* 
+
+-- CSS HEX --
+--burlywood: #ddb989ff;
+--slate-gray: #717a84ff;
+--dutch-white: #e7d8b9ff;
+--rich-black-fogra-29: #00050bff;
+--outer-space-crayola: #3b4545ff;
+
+-- SCSS Gradient --
+$gradient-top: linear-gradient(0deg, #ddb989ff, #717a84ff, #e7d8b9ff, #00050bff, #3b4545ff);
+$gradient-right: linear-gradient(90deg, #ddb989ff, #717a84ff, #e7d8b9ff, #00050bff, #3b4545ff);
+$gradient-bottom: linear-gradient(180deg, #ddb989ff, #717a84ff, #e7d8b9ff, #00050bff, #3b4545ff);
+$gradient-left: linear-gradient(270deg, #ddb989ff, #717a84ff, #e7d8b9ff, #00050bff, #3b4545ff);
+$gradient-top-right: linear-gradient(45deg, #ddb989ff, #717a84ff, #e7d8b9ff, #00050bff, #3b4545ff);
+$gradient-bottom-right: linear-gradient(135deg, #ddb989ff, #717a84ff, #e7d8b9ff, #00050bff, #3b4545ff);
+$gradient-top-left: linear-gradient(225deg, #ddb989ff, #717a84ff, #e7d8b9ff, #00050bff, #3b4545ff);
+$gradient-bottom-left: linear-gradient(315deg, #ddb989ff, #717a84ff, #e7d8b9ff, #00050bff, #3b4545ff);
+$gradient-radial: radial-gradient(#ddb989ff, #717a84ff, #e7d8b9ff, #00050bff, #3b4545ff);
+*/
